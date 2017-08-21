@@ -9,7 +9,7 @@ def leerDatos(file):
     
 def graficaDatos(X,y,theta):
     Opoints = X.dot(theta)
-    plt.plot(X,y,'b^',X,Opoints,'r')
+    plt.plot(X[:,1],y,'b^',X[:,1],Opoints,'r')
     plt.show()
     return 0
     
