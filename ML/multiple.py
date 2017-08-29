@@ -17,16 +17,6 @@ def normalizacionDeCaracteristicas(X):
     #print(X.shape[1])
     return X,mu,sigma
 
-
-def graficaDatos(X,y,theta):
-    Opoints = numpy.c_[numpy.ones(X.shape[0]), X[:,:]].dot(theta)
-    plt.plot(X,y,'b^',X,Opoints,'r') # Graficar puntos y recta
-    plt.show()
-    n,mc = gadienteDescendenteMultivariable(X,y,numpy.zeros((X.shape[1]+1,1))) # Obtener la matriz de costos mc
-    plt.plot(mc) # Graficar la curva de errores
-    plt.show()
-    return 0
-
 def graficaError(J_Historial):
     plt.plot(J_Historial) # Graficar la curva de errores
     plt.show()
@@ -59,8 +49,11 @@ def predicePrecio(X,theta):
 X,Y = leerDatos("./ex1data2.txt")
 X,mu,s = normalizacionDeCaracteristicas(X)
 O,hist = gadienteDescendenteMultivariable(X,Y, numpy.zeros((X.shape[1]+1,1))) # Save final theta in
-print("\nTheta vector:")
+print("\nTheta vector (gradiente decendente):")
 print(O)
+O2 = ecuacionNormal(X,Y)
+print("\nTheta vector (normal equation):")
+print(O2)
 print("Cost:")
 print(calculaCosto(numpy.c_[numpy.ones(X.shape[0]), X[:,:]],Y,O))
 graficaError(hist)
