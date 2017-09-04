@@ -48,6 +48,8 @@ def predicePrecio(X,theta):
 
 X,Y = leerDatos("./ex1data2.txt")
 X,mu,s = normalizacionDeCaracteristicas(X)
+print(X)
+'''
 O,hist = gadienteDescendenteMultivariable(X,Y, numpy.zeros((X.shape[1]+1,1))) # Save final theta in
 print("\nTheta vector (gradiente decendente):")
 print(O)
@@ -58,3 +60,4 @@ print("Cost:")
 print(calculaCosto(numpy.c_[numpy.ones(X.shape[0]), X[:,:]],Y,O))
 graficaError(hist)
 #print(predicePrecio(numpy.array([1,2,3]),O))
+'''
