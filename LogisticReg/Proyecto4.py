@@ -1,7 +1,7 @@
 import numpy
 import matplotlib.pyplot as plt
 
-def leerDatos(file): #Funcion para leer el archivo de datos iniciales.
+def leerDatos(file):
     points = numpy.loadtxt(file, delimiter=',') # Save all the file's points in a Matrix
     cols = points.shape[1]
     x = numpy.c_[numpy.ones(points.shape[0]), points[:, numpy.arange(0,cols-1)]]# Create Matrix of Xs with 1s
@@ -11,35 +11,43 @@ def leerDatos(file): #Funcion para leer el archivo de datos iniciales.
     return x,y
 
 def sigmoidal(z):
-    s = numpy.exp(z) #exponencial
-    return 1/(1+s) #regresar la sigmoidal de z
+    #print(z)
+    s = numpy.exp(z)
+    #print(s)
+    return 1/(1+s)
 
 def funcionCosto(theta,X,y):
-    hyp = sigmoidal(X.dot(theta)*-1)# hypothesis
-    J = -1/(y.size) * ((numpy.log(hyp).T.dot(y)) + (numpy.log(1-hyp).T.dot(1-y))) #Costo
-    grad = (1.0/y.size) * (numpy.dot(X.T,(hyp - y))) #gradiente
+    hyp = sigmoidal(X.dot(theta)*-1)
+    #print(y.size)
+    J = -1/(y.size) * ((numpy.log(hyp).T.dot(y)) + (numpy.log(1-hyp).T.dot(1-y)))
+    grad = (1.0/y.size) * (numpy.dot(X.T,(hyp - y)))
     return J, grad
 
-def aprende(theta,X,y,iteraciones): # Función que regresa el valor de Thetas de acuerdo al algoritmo de gradiente descendiente.
+def aprende(theta,X,y,iteraciones):
     m = y.size # Numero de datos
-    alpha = 0.003 # Grado de aprendizaje
+    alpha = 0.003
     for i in range(0,iteraciones):
-        hyp = sigmoidal(X.dot(theta)*-1) #hypothesis
+        hyp = sigmoidal(X.dot(theta)*-1)
         #print(hyp)
         theta = theta - alpha * (1.0/m) * (numpy.dot(X.T,(hyp - y))) # Theta vector for each iteration
+        #print(theta)
     return theta
 
-def predice(theta,X): # Función que recive una matriz de thetas, y una matriz de Xs y arroja una matriz de predicción de aprueba o no.
+def predice(theta,X):
     x = numpy.c_[numpy.ones(X.shape[0]), X[:]]
-    threshold = 0.5
-    p = sigmoidal(x.dot(theta)*-1) >= threshold
+    #print(x)
+    treshold = 0.5
+    #print('p')
+    #print(sigmoidal(x.dot(theta)*-1))
+    p = sigmoidal(x.dot(theta)*-1) >= treshold
+
     return(p.astype(int))
 
-def graficaDatos(X,y,theta): #función para graficar los ejemplos de la población y la recta dada por el vector Theta.
+def graficaDatos(X,y,theta):
     points = numpy.c_[X[:,:], y[:,:]]
-    non = points[:,3] == 0 # puntos de los no admitidos
-    admi = points[:,3] == 1 # puntos de los admitidos
-    Opoints = ((numpy.arange(0,100) * (-1*theta[1])) - theta[0])/theta[2] # puntos de la recta creada por Theta de 0 a 100
+    non = points[:,3] == 0
+    admi = points[:,3] == 1
+    Opoints = ((numpy.arange(0,100) * (-1*theta[1])) - theta[0])/theta[2]
     plt.plot(numpy.arange(0,100), Opoints, 'r')
     axis = plt.gca()
     axis.scatter(points[admi][:,1], points[admi][:,2], marker='X', c ='k', s=60, label='Aditted')
