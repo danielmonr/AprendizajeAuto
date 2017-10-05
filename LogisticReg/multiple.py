@@ -54,7 +54,7 @@ X,Y = leerDatos("./ex1data2.txt")
 t = aprende(numpy.zeros((X.shape[1],1)), X,Y, 2000000)
 j,g = funcionCosto(t,X,Y)
 
-res = predice(t,numpy.array([[45,85]]))
+res = predice(t,numpy.array([[100,100]]))
 
 print("Costo:")
 print(j)
