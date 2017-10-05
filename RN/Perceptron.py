@@ -6,12 +6,17 @@ salidas_and = np.array([0,0,0,1])
 salidas_or = np.array([1,1,0,1])
 
 theta = np.random.random(entradas.shape[1])*2
-print("theta init:\n", theta)
+#print("theta init:\n", theta)
 #print("X:\n", entradas)
 
 def funcionCostoPerceptron(theta,X,y):
-    J = 0
+    r = X.dot(theta.T)
+    for i in np.arange(r.shape[1]):
+        r[0,i] = (1 if r[0,i] >= 1 else 0)
+        #print("r:\n", r[0,i])
+    J = (r-y).dot((r-y).T)[0,0]
     grad = 0
+    #J = 0
     return [J, grad]
     
 def	entrenaPerceptron(X, y, theta):
@@ -20,7 +25,7 @@ def	entrenaPerceptron(X, y, theta):
     alpha = 0.5
     cont = True
     e = 0
-    print("alpha:",alpha)
+    #print("alpha:",alpha)
     while cont:
         Net = np.zeros(X.shape[0])
         out = np.zeros(X.shape[0])
@@ -40,19 +45,21 @@ def	entrenaPerceptron(X, y, theta):
             cont = (True if k*k > e*e else cont)
             
             
-    print ("\nout:\n", out)
+    #print ("\nout:\n", out)
     
     return theta
     
 def predicePerceptron(theta, X):
-    print(theta.shape)
-    print(X.shape)
     r = X.dot(theta.T)
     for i in np.arange(r.shape[0]):
         r[i] = (1 if r[i] >= 1 else 0)
     return r
 
+print("costo 0: ", funcionCostoPerceptron(entradas,theta,salidas_or)[0])
+
 t = entrenaPerceptron(entradas, salidas_or, theta)
 samples = np.matrix([[1,1],[0,1],[0,0]])
+
+print("costo 1: ", funcionCostoPerceptron(entradas,t,salidas_or)[0])
 
 print(predicePerceptron(t, samples))
