@@ -14,43 +14,25 @@ def funcionCostoAdaline(theta,X,y):
     for i in np.arange(r.shape[1]):
         r[0,i] = (1 if r[0,i] >= 1 else 0)
         #print("r:\n", r[0,i])
-    J = (r-y).dot((r-y).T)[0,0]
+    J = (y-r).dot((y-r).T)[0,0]
     grad = 0
     #J = 0
     return [J, grad]
-    
+
 def	entrenaAdaline(X, y, theta):
-    #x = np.c_[np.ones(X.shape[0]), X[:,:]] # Add column of 1s
-    #alpha = np.random.random_sample()
     alpha = 0.1
     cont = True
-    e = 0
-    #print("alpha:",alpha)
+    e = 0.001
     while cont:
         Net = np.zeros(X.shape[0])
         out = np.zeros(X.shape[0])
         for it in np.arange(X.shape[0]):
             Net[it] = X[it].dot(theta.T)
-            print("theta:",theta)
-            print("Net:", Net[it])
-            #print("theta:",theta)
         err = X.T.dot((Net-y))
-        print("Test:", np.squeeze(err).shape)
-        print("err: ", err.shape)
         theta = theta -((2/X.shape[0])*err)
-        #print("\ntheta:\n", theta)
-        print("\nErr:\n", err)
-        cont = False
-        
-        for k in err:
-            print(k)
-            cont = (True if k*k > e*e else cont)
-            
-            
-    #print ("\nout:\n", out)
-    
+        cont = (True if err.dot(err.T)[0,0] > e else False)
     return theta
-    
+
 def prediceAdaline(theta, X):
     r = X.dot(theta.T)
     for i in np.arange(r.shape[0]):
