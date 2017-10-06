@@ -44,7 +44,7 @@ def predicePerceptron(theta, X):
     r = X.dot(theta.T)
     for i in np.arange(r.shape[0]):
         r[i] = (1 if r[i] >= 1 else 0)
-    return r
+    return r.T
 
 # ADALINE
 
@@ -87,6 +87,7 @@ t = entrenaPerceptron(entradas, salidas_and, theta)
 print("Theta Perceptron", t)
 samples = np.matrix([[1,1],[0,1],[0,0]])
 print("Prediccion con Perceptron, de las muestras:\n", samples,"_____", predicePerceptron(t, samples))
-theta = np.zeros(entradas.shape[1])
+theta = np.zeros(entradas.shape[1]) # Inicializacion de Thetas para Adaline
 t = entrenaAdaline(entradas, salidas_and, theta)
+print("Theta ADALINE", t)
 print("Prediccion con Adaline, de las muestras:\n", samples,"_____", prediceAdaline(t, samples))
