@@ -73,7 +73,8 @@ def randInicializaPesos(L_in): #validated
     w = np.random.uniform(-eps,eps,L_in)
     return w # shape:(L_in,)
 
-def prediceRNYaEntrenada(X, nn_params, activacion, b):
+def prediceRNYaEntrenada(X, nn_params, activacion):
+    global b
     yy = nn_params.dot(X) + b[0]
     y = (sigmoidal(yy) if activacion == "sigmoidal" else lineal(yy))
     return y
@@ -83,22 +84,12 @@ print("Testing")
 x = np.matrix([[1,0], [0,1], [0,0], [1,1]]).T
 y = np.array([0,0,0,1])
 salidas_or = np.array([1,1,0,1])
-print("x.shape:",x.shape)
-print("x:", x)
-print("y.shape:", y.shape)
-print("y:", np.squeeze(np.asarray(y)))
-print("Running functions")
+
 w = randInicializaPesos(x.shape[0])
 print("randinitW(y.size):", w)
-print("w.shape:", w.shape)
-print("lineal(2)", lineal(2))
-print("linealGradiante(2)", linealGradiante(2))
-print("sigmoidal(x)", sigmoidal(x))
-print("sigmoidGradiente(x)", sigmoidGradiente(x))
-print("sigmoidCosto(x,y)", sigmoidCosto(x,y))
 w_l, b_l = bpnUnaNeurona(w,y.size,x,y,0.1,"lineal")
 print("bpnUnaNeurona(w,y.size,x,y,0.1,lineal):\n", w_l, b_l)
+print("prediceRNYaEntrenada([1,1], w_s, lineal, b)", prediceRNYaEntrenada([1,1], w_l, "lineal"))
 w_s, b_s = bpnUnaNeurona(w,y.size,x,y,0.1,"sigmoidal")
 print("bpnUnaNeurona(w,y.size,x,y,0.1,sigmoidal):\n", w_s, b_s)
-print("prediceRNYaEntrenada([1,1], w_s, sigmoidal, b)", prediceRNYaEntrenada([1,1], w_s, "sigmoidal", b_s))
-print("prediceRNYaEntrenada([1,1], w_s, lineal, b)", prediceRNYaEntrenada([1,1], w_l, "lineal", b_l))
+print("prediceRNYaEntrenada([1,1], w_s, sigmoidal, b)", prediceRNYaEntrenada([1,1], w_s, "sigmoidal"))
