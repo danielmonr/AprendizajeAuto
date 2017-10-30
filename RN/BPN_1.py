@@ -16,7 +16,7 @@ def bpnUnaNeurona (nn_params, input_layer_size, X, y, alpha, activacion):
         J = (sigmoidCosto(z,y) if activacion == "sigmoidal" else linealCosto(X,y,nn_params))
         #back-propagation
         dz = A-y
-        #print("dz:", dz)
+        #print("A.shape:", A.shape)
         if activacion == "sigmoidal":
             dw = (1/input_layer_size)*(X.dot(dz.T))
         else:
@@ -76,6 +76,7 @@ def randInicializaPesos(L_in): #validated
 def prediceRNYaEntrenada(X, nn_params, activacion):
     global b
     yy = nn_params.dot(X) + b[0]
+    print("yy",yy)
     y = (sigmoidal(yy) if activacion == "sigmoidal" else lineal(yy))
     return y
 
@@ -92,4 +93,4 @@ print("bpnUnaNeurona(w,y.size,x,y,0.1,lineal):\n", w_l, b_l)
 print("prediceRNYaEntrenada([1,1], w_s, lineal, b)", prediceRNYaEntrenada([1,1], w_l, "lineal"))
 w_s, b_s = bpnUnaNeurona(w,y.size,x,y,0.1,"sigmoidal")
 print("bpnUnaNeurona(w,y.size,x,y,0.1,sigmoidal):\n", w_s, b_s)
-print("prediceRNYaEntrenada([1,1], w_s, sigmoidal, b)", prediceRNYaEntrenada([1,1], w_s, "sigmoidal"))
+print("prediceRNYaEntrenada([1,1], w_s, sigmoidal, b)", prediceRNYaEntrenada([[1,1],[0,0]], w_s, "sigmoidal"))
