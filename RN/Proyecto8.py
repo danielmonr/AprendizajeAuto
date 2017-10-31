@@ -12,7 +12,7 @@ def leerDatos(file):
 
 def entrenaRN(input_layer_size, hidden_layer_size, num_labels, X, y):
     alpha = 2
-    iteraciones = 10000
+    iteraciones = 2000
     # Variables inicialization
     m = X.shape[0]
     w1 = randInicializacionPesos(input_layer_size, hidden_layer_size)
