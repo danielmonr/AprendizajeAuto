@@ -3,16 +3,16 @@ import random
 
 def leerDatos(file):
     points = np.loadtxt(file, delimiter=' ') # Save all the file's points in a Matrix
-    print(points.shape)
+    #print(points.shape)
     cols = points.shape[1]
-    print("cols:", cols)
+    #print("cols:", cols)
     x = np.c_[np.ones(points.shape[0]), points[:, np.arange(0,cols-1)]]# Create Matrix of Xs with 1s
     y = np.c_[points[:, cols-1]] # Create Y Vector, as a Matrix
     return x,y
 
 def entrenaRN(input_layer_size, hidden_layer_size, num_labels, X, y):
     alpha = 2
-    iteraciones = 2000
+    iteraciones = 200
     # Variables inicialization
     m = X.shape[0]
     w1 = randInicializacionPesos(input_layer_size, hidden_layer_size)
@@ -109,16 +109,16 @@ def prediceRNYaEntrenada(X,W1,b1,W2,b2):
     print("prediccion.shape:", y.shape)
     return y
 
-X,y = leerDatos("./RN/newData.txt")
+X,y = leerDatos("./newData.txt")
 
-print("X.shape:",X.shape)
-print("y.shape", y.shape)
+#print("X.shape:",X.shape)
+#print("y.shape", y.shape)
 
 t1,b1,t2,b2 = entrenaRN(X.shape[1], 25, 10, X,y)
 
 res = prediceRNYaEntrenada(X,t1,b1,t2,b2)
 
-print("shape of diff", (res-y.T).shape)
+#print("shape of diff", (res-y.T).shape)
 
 err = np.count_nonzero(res - y.T)/50
 print("err:", err)
