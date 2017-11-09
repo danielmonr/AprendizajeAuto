@@ -1,10 +1,10 @@
-fname = "digitos.txt"
+fname = "../K_means/ex7data2.txt"
 
 with open(fname) as f:
     lines = f.readlines()
     f.close()
 
-fp = open('./newData.txt', 'w')
+fp = open('../K_means/newData.txt', 'w')
 
 for l in lines:
     l = l[1:]
